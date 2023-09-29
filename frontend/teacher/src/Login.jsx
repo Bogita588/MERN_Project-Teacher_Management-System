@@ -1,4 +1,6 @@
-import { useState } from 'react'
+import { useState, } from 'react'
+import { useNavigate } from 'react-router-dom'
+
 import './assets/login.css'
 import axios from'axios'
 
@@ -8,20 +10,31 @@ const Login = () => {
         password: '',
     })
 
+    const navigate = useNavigate()
+    const [error, setError] = useState('')
+
     const handleSubmit = (event) => {
         event.preventDefault();
         axios.post('http://localhost:8080/login', values)
-        .then(res => console.log(res))
+        .then(res => {
+            if(res.data.Status === "Success"){
+                navigate('/');
+
+            }else{
+                setError(res.data.Error);
+
+            }
+        })
         .catch(err => console.log(err));
 
     }
   return (
     
     <div className='d-flex justify-content-center align-items-center vh-100 backImage'>
+            
             <div className='p-3 rounded w-25 border loginForm'>
-                <div className='text-danger'>
-                    
-                </div>
+                <div className='text-danger'>{error && error}</div>
+                
                 <h2>Login</h2>
                 <form onSubmit={handleSubmit} >
                     <div className='mb-3'>
