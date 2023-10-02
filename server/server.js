@@ -13,6 +13,7 @@ app.use(cors());
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.json());
+app.use(express.static('public'))
 
 const con = mysql.createConnection({
     host: "localhost",
@@ -57,10 +58,35 @@ app.post('/login', (req, res) => {
 })
 
 
-app.post('/create',upload.single('image'), (req, res) => { 
-    console.log(req.file);
+
+app.post('/create',upload.single('image'), (req, res) => {
+    const sql = "INSERT INTO teachers (`name`,`email`, `phone`, `password`, `address`, `salary, `image`) VALUES (?)";
+    bcrypt.hash(req.body.password.toString(), 10, (err, hash) => {
+        if(err) return res.json({Error: "Error in hashing password"});
+        const values = [
+            req.body.name,
+            req.body.email,
+            req.body.phone,
+            hash,
+            req.body.address,
+            req.body.salary,
+            
+            req.file.filename
+        ]
+        con.query(sql, [values], (err, result) => {
+            if(err) return res.json({Error: "Inside signup query function"});
+            return res.json({Status: "Success"});
+        })
+    } )
 })
 
+app.get('/getTeacher', (req, res) => {
+    const sql = "SELECT * FROM teachers";
+    con.query(sql, (err, result) => {
+        if(err) return res.json({Error: "Get teacher error in sql"});
+        return res.json({Status: "Success", Result: result})
+    })
+})
 
 
 app.listen(8080, ()=> {
