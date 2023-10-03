@@ -11,7 +11,7 @@ import path from 'path'
 const app = express();
 app.use(cors());
 app.use(cookieParser());
-app.use(express.json());
+
 app.use(express.json());
 app.use(express.static('public'))
 
@@ -88,6 +88,24 @@ app.get('/getTeacher', (req, res) => {
     })
 })
 
+
+app.get('/get/:id', (req, res) => {
+    const id = req.params.id;
+    const sql = "SELECT * FROM teachers where id = ?";
+    con.query(sql, [id], (err, result) => {
+        if(err) return res.json({Error: "Get teacher error in sql"});
+        return res.json({Status: "Success", Result: result})
+    })
+})
+
+app.put('/update/:id', (req, res) => {
+    const id = req.params.id;
+    const sql = "UPDATE teachers set salary = ? WHERE id = ?";
+    con.query(sql, [req.body.salary, id], (err, result) => {
+        if(err) return res.json({Error: "update teacher error in sql"});
+        return res.json({Status: "Success"})
+    })
+})
 
 app.listen(8080, ()=> {
     console.log("Running");
