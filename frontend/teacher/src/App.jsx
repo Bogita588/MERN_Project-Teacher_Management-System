@@ -9,6 +9,11 @@ import Home from './Home'
 import Teacher from './Teacher'
 import AddTeacher from './AddTeacher'
 import EditTeacher from './EditTeacher'
+import Start from './Start'
+
+import TeacherDetails from './TeacherDetails';
+import TeacherLogin from './TeacherLogin';
+
 
 
 function App() {
@@ -26,10 +31,16 @@ function App() {
       <Route path='/teacher' element={<Teacher />}></Route>
       <Route path='/create' element={<AddTeacher />}></Route>
       <Route path='/teacherEdit/:id' element={<EditTeacher />}></Route>
+      
+      <Route path='/teacherdetail/' element={<TeacherDetails />}></Route>
+      
+
 
       </Route>
        <Route path='/login' element={<Login />}></Route>
-  
+       <Route path='/start' element={<Start />}></Route>
+       <Route path='/teacherdetail' element={<TeacherLogin />}></Route>
+       
     </Routes>
     </BrowserRouter>
     
