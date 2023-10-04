@@ -1,6 +1,7 @@
 import { useState, } from 'react'
 import { useNavigate } from 'react-router-dom'
 
+
 import './assets/login.css'
 import axios from'axios'
 
@@ -11,6 +12,7 @@ const Login = () => {
     })
 
     const navigate = useNavigate()
+    axios.defaults.withCredentials = true;
     const [error, setError] = useState('')
 
     const handleSubmit = (event) => {

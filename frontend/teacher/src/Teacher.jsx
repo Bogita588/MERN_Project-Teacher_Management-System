@@ -18,6 +18,18 @@ function Teacher() {
     .catch(err => console.log(err));
   }, [])
 
+   const handleDelete = (id) => {
+    axios.delete('http://localhost:8080/delete/'+id)
+    .then(res => {
+      if(res.data.Status === "Success") {
+        window.location.reload(true);
+      } else {
+        alert("Error")
+      }
+    })
+    .catch(err => console.log(err));
+  }
+
   
 
   return (
@@ -53,6 +65,7 @@ function Teacher() {
                   <td>
                     <Link to={`/teacherEdit/`+teacher.id} className='btn btn-primary btn-sm me-2'>edit</Link>
                     <button  className='btn btn-sm btn-danger'>delete</button>
+                    <button onClick={e => handleDelete(teacher.id)} className='btn btn-sm btn-danger'>delete</button>
                     
                   </td>
               </tr>

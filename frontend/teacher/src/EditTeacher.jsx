@@ -53,7 +53,7 @@ function EditTeacher() {
 				</div>
 				
                 <div className="col-12">
-					<label htmlFor="inputPhone" className="form-label">Phone<git stat/label>
+					<label htmlFor="inputPhone" className="form-label">Phone</label>
 					<input type="phone" className="form-control" id="inputPhone" placeholder=' Phone' autoComplete='off'
 					onChange={e => setData({...data, phone: e.target.value})} value={data.phone}/>
 				</div>
